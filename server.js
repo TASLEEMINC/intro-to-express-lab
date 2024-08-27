@@ -59,4 +59,4 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello Express!</h1>");
 });
 
-app.listen(4000, () => console.log("The server is running"));
+app.listen(3000, () => console.log("The server is running"));
