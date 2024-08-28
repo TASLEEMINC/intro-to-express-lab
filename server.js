@@ -2,6 +2,27 @@ const express = require("express");
 
 const app = express();
 
+const shoes = [
+  { name: "Birkenstocks", price: 50, type: "sandal" },
+  { name: "Air Jordans", price: 500, type: "sneaker" },
+  { name: "Air Mahomeses", price: 501, type: "sneaker" },
+  { name: "Utility Boots", price: 20, type: "boot" },
+  { name: "Velcro Sandals", price: 15, type: "sandal" },
+  { name: "Jet Boots", price: 1000, type: "boot" },
+  { name: "Fifty-Inch Heels", price: 175, type: "heel" }
+];
+app.get('/shoes', (req, res) => {
+  let filteredShoes = shoes;
+
+  // res.send(`Hello there, ${req.query.name}! I hear you are ${req.query.age} years old!`);
+  const type = req.query.type;
+  console.log(type)
+
+  if (type) {
+    filteredShoes = filteredShoes.filter(shoe => shoe.type === type);
+}
+});
+
 // Task: Create a route for URLs like /collectibles/<index-parameter>.
 // Examples: Matches routes such as /collectibles/2 or /collectibles/0.
 // Validation: If the index does not correspond to an item in the array, respond with “This item is not yet in stock. Check back soon!”
@@ -28,7 +49,7 @@ app.get("/collectibles/:index", (req, res) => {
 
 // Task: Create a route that responds to URLs like /greetings/<username-parameter>.
 
-app.get("/greetings/:firstName", (req, res) =>
+app.get("/greetings/:firstName", (req, res) => {
   res.send(
     `
     <h1>
@@ -36,7 +57,8 @@ app.get("/greetings/:firstName", (req, res) =>
     </h1>
     `
   )
-);
+  console.log('hi5')
+});
 
 // Task: Set up a route to handle URLs following the pattern /roll/<number-parameter>.
 // Examples: Matches routes like /roll/6 or /roll/20.
@@ -59,4 +81,4 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello Express!</h1>");
 });
 
-app.listen(3000, () => console.log("The server is running"));
+app.listen(4000, () => console.log("The server is running"));
