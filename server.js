@@ -2,6 +2,13 @@ const express = require("express");
 
 const app = express();
 
+// Task: Create a route /shoes that filters the list of shoes based on query parameters.
+// Query Parameters:
+// min-price: Excludes shoes below this price.
+// max-price: Excludes shoes above this price.
+// type: Shows only shoes of the specified type.
+// No parameters: Responds with the full list of shoes.
+
 const shoes = [
   { name: "Birkenstocks", price: 50, type: "sandal" },
   { name: "Air Jordans", price: 500, type: "sneaker" },
@@ -9,18 +16,33 @@ const shoes = [
   { name: "Utility Boots", price: 20, type: "boot" },
   { name: "Velcro Sandals", price: 15, type: "sandal" },
   { name: "Jet Boots", price: 1000, type: "boot" },
-  { name: "Fifty-Inch Heels", price: 175, type: "heel" }
+  { name: "Fifty-Inch Heels", price: 175, type: "heel" },
 ];
-app.get('/shoes', (req, res) => {
+
+app.get("/shoes", (req, res) => {
   let filteredShoes = shoes;
 
-  // res.send(`Hello there, ${req.query.name}! I hear you are ${req.query.age} years old!`);
+  const min_price = req.query.min_price;
+  const max_price = req.query.max_price;
   const type = req.query.type;
-  console.log(type)
+
+  if (min_price) {
+    filteredShoes = filteredShoes.filter(
+      (shoe) => shoe.price >= Number(min_price)
+    );
+  }
+
+  if (max_price) {
+    filteredShoes = filteredShoes.filter(
+      (shoe) => shoe.price <= Number(max_price)
+    );
+  }
 
   if (type) {
-    filteredShoes = filteredShoes.filter(shoe => shoe.type === type);
-}
+    filteredShoes = filteredShoes.filter((shoe) => shoe.type === type);
+  }
+
+  res.json(filteredShoes);
 });
 
 // Task: Create a route for URLs like /collectibles/<index-parameter>.
@@ -56,8 +78,8 @@ app.get("/greetings/:firstName", (req, res) => {
         What a delight it is to see you once more, ${req.params.firstName}
     </h1>
     `
-  )
-  console.log('hi5')
+  );
+  console.log("hi5");
 });
 
 // Task: Set up a route to handle URLs following the pattern /roll/<number-parameter>.
@@ -81,4 +103,4 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello Express!</h1>");
 });
 
-app.listen(4000, () => console.log("The server is running"));
+app.listen(3000, () => console.log("The server is running"));
